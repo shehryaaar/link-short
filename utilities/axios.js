@@ -43,6 +43,15 @@ export async function getData(endpoint) {
     }
 }
 
+export async function getDataById(endpoint, id) {
+    try {
+        const response = await axiosInstance.get(endpoint + id);
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+}
+
 export async function createData(endpoint, data) {
     try {
         const requestData =

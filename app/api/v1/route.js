@@ -55,7 +55,7 @@ export const GET = async (request) => {
     try {
         await databaseService.connect();
 
-        const urls = await UrlsModel.find();
+        const urls = await UrlsModel.find().sort({ createdAt: -1 });
 
         if (urls.length === 0) {
             return await sendResponse(

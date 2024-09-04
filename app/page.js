@@ -1,11 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { useEffect, useState } from 'react';
-import { createData, getData } from '@/utilities/axios.js';
 import {
     Table,
     TableBody,
@@ -15,13 +14,17 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { GoInfo } from 'react-icons/go';
+import { createData, getData } from '@/utilities/axios.js';
 import Spinner from '@/components/spinner/Spinner';
+import { RiEmotionHappyFill } from 'react-icons/ri';
+import { FaGithub, FaLink } from 'react-icons/fa';
+import configuration from '@/configuration/configuration';
 
 export default function Home() {
     const [urls, setUrls] = useState([]);
     const [loading, setLoading] = useState(false);
     const [urlInput, setUrlInput] = useState('');
+    const [currentDeploymentUrl, setCurrentDeploymentUrl] = useState('');
 
     const fetchApiData = async () => {
         try {
@@ -38,6 +41,11 @@ export default function Home() {
 
     useEffect(() => {
         fetchApiData();
+    }, []);
+
+    useEffect(() => {
+        const url = `${window.location.protocol}//${window.location.host}`;
+        setCurrentDeploymentUrl(url);
     }, []);
 
     const handleUrlShortClick = async (event) => {
@@ -73,32 +81,57 @@ export default function Home() {
     return loading ? (
         <Spinner />
     ) : (
-        <div className="flex flex-col gap-4 m-20">
-            <form
-                onSubmit={handleUrlShortClick}
-                className="flex items-center gap-4"
-            >
-                <Input
-                    className="max-w-[400px]"
-                    value={urlInput}
-                    onChange={(e) => setUrlInput(e.target.value)}
-                    placeholder="Enter URL here"
-                />
-                <Button type="submit" variant="outline">
-                    Shorten URL
-                </Button>
-            </form>
+        <div className="flex flex-col gap-12 mx-28 my-16">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <FaLink />
+                    <span className="text-lg">URL SHORTENER</span>
+                </div>
+
+                <a
+                    className="flex items-center gap-2"
+                    href="https://github.com/montasim/url-shortener"
+                    target="_blank"
+                    referrerPolicy="no-referrer"
+                >
+                    <FaGithub className="text-lg" />
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+
+            <div className="flex items-center justify-between">
+                <form
+                    onSubmit={handleUrlShortClick}
+                    className="flex items-center gap-4"
+                >
+                    <Input
+                        className="w-[650px]"
+                        value={urlInput}
+                        onChange={(e) => setUrlInput(e.target.value)}
+                        placeholder="Enter URL here"
+                    />
+                    <Button type="submit" variant="outline">
+                        Shorten URL
+                    </Button>
+                </form>
+
+                <div className="flex items-center gap-2">
+                    <RiEmotionHappyFill className="text-lg" />
+                    <span>{urls?.length}</span>
+                </div>
+            </div>
 
             <Table>
-                <TableCaption>A list recent URLs</TableCaption>
-                <TableHeader>
+                <TableCaption>A list of recent URLs</TableCaption>
+
+                <TableHeader className="sticky top-0">
                     <TableRow>
                         <TableHead className="w-[250px]">Created At</TableHead>
-                        <TableHead>ID</TableHead>
-                        <TableHead>URL</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead>Short URL</TableHead>
+                        <TableHead>Original URL</TableHead>
                     </TableRow>
                 </TableHeader>
+
                 <TableBody>
                     {urls &&
                         urls.map((url, index) => (
@@ -107,12 +140,9 @@ export default function Home() {
                                     {url.createdAt}
                                 </TableCell>
                                 <TableCell>
-                                    <Badge>{url?.id}</Badge>
+                                    {currentDeploymentUrl}/{url?.id}
                                 </TableCell>
                                 <TableCell>{url?.url}</TableCell>
-                                <TableCell className="flex justify-end">
-                                    <GoInfo className="text-black text-lg" />
-                                </TableCell>
                             </TableRow>
                         ))}
                 </TableBody>
