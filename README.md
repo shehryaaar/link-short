@@ -1,6 +1,6 @@
-[//]: # 'AUTHENTICATION'
+[//]: # 'URL SHORTER'
 
-# <img loading="lazy" src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=24&duration=1&pause=1&color=EB008B&center=true&vCenter=true&repeat=false&width=210&height=40&lines=AUTHENTICATION" alt="AUTHENTICATION" />
+# <img loading="lazy" src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=24&duration=1&pause=1&color=EB008B&center=true&vCenter=true&repeat=false&width=160&height=40&lines=URL+SHORTER" alt="URL SHORTER" />
 
 [//]: # '<!-- GitHub actions badges start -->'
 [//]: # '<div>'
@@ -53,13 +53,9 @@
 
 ## <img loading="lazy" src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=20&duration=1&pause=1&color=00B8B5&center=true&vCenter=true&repeat=false&width=120&height=40&lines=1.+FEATURES" alt="1. FEATURES" id="1-features" />
 
-1. Signup
-2. Verify email
-3. Resend email verification
-4. Request new password
-5. Reset password
-6. Login
-7. Logout
+1. Create short URL
+2. Redirect to the original URL
+3. Get all URLs
 
 <br/>
 
@@ -274,8 +270,6 @@ Vercel is the recommended option for hosting the files since it is free and easy
 
 ## <img loading="lazy" src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=20&duration=1&pause=1&color=00B8B5&center=true&vCenter=true&repeat=false&width=115&height=40&lines=9.+ARTICLES" alt="9. ARTICLES" id="9-articles" />
 
-1. [StackOverflow answer on file upload to Google Drive](https://stackoverflow.com/questions/65181932/how-i-can-upload-file-to-google-drive-with-google-drive-api).
-
 <br/>
 
 [//]: # '10. DO NOT FORGET TO DO'
@@ -287,8 +281,6 @@ Vercel is the recommended option for hosting the files since it is free and easy
 [//]: # '11. TUTORIALS'
 
 ## <img loading="lazy" src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=20&duration=1&pause=1&color=00B8B5&center=true&vCenter=true&repeat=false&width=135&height=40&lines=11.+TUTORIALS" alt="11. TUTORIALS" id="11-tutorials" />
-
-1. [Google Drive file upload tutorial](https://www.youtube.com/watch?v=bkaQTLCBBeo&t=600s).
 
 <br/>
 
