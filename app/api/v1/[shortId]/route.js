@@ -13,7 +13,9 @@ export const GET = async (request, context) => {
 
         const { params } = context;
         const shortId = params.shortId;
-        console.debug(`Received shortId: ${shortId} from the request parameters`);
+        console.debug(
+            `Received shortId: ${shortId} from the request parameters`
+        );
 
         const newUrl = await UrlsModel.findOne({
             id: shortId,
@@ -31,7 +33,7 @@ export const GET = async (request, context) => {
         return await sendResponse(
             request,
             true,
-            httpStatus.CREATED,
+            httpStatus.OK,
             'Original URL found successfully.',
             newUrl
         );

@@ -69,7 +69,7 @@ export const GET = async (request) => {
         return await sendResponse(
             request,
             true,
-            httpStatus.CREATED,
+            httpStatus.OK,
             `${urls?.length} original URLs found successfully.`,
             urls
         );

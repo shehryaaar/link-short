@@ -8,7 +8,7 @@ const constants = {
     shortId: {
         LENGTH: 6,
     },
-    defaultExpiration: '1y'
+    defaultExpiration: '1y',
 };
 
 const urlsSchema = new Schema(
@@ -50,7 +50,7 @@ const urlsSchema = new Schema(
         },
     },
     {
-        timestamps: { createdAt: 'createdAt'},
+        timestamps: { createdAt: 'createdAt' },
         versionKey: false,
         description:
             'Schema for storing original URLs and their shortened versions with timestamps.',
