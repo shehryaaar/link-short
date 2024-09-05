@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ProviderContainer>{children}</ProviderContainer>
+                <main className="h-screen w-screen">
+                    <ProviderContainer>{children}</ProviderContainer>
+                </main>
             </body>
         </html>
     );

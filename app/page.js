@@ -81,8 +81,8 @@ export default function Home() {
     return loading ? (
         <Spinner />
     ) : (
-        <div className="flex flex-col gap-10 max-w-7xl mx-auto overflow-hidden">
-            <div className="flex items-center justify-between">
+        <div className="w-full h-[100vh] flex flex-col gap-6 pt-10 max-w-7xl mx-auto overflow-hidden">
+            <div className="flex items-center justify-between px-4 md:px-2">
                 <div className="flex items-center gap-2">
                     <FaLink />
                     <span className="text-lg">URL SHORTENER</span>
@@ -99,7 +99,7 @@ export default function Home() {
                 </a>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-4 md:px-2">
                 <form
                     onSubmit={handleUrlShortClick}
                     className="flex items-center gap-4"
@@ -122,12 +122,16 @@ export default function Home() {
             </div>
 
             <Table
+                isStriped
                 isHeaderSticky
                 aria-label="Example table with client side sorting"
-                classNames={{
-                    base: 'max-h-[520px] overflow-y-auto',
-                    table: 'min-h-[420px]',
-                }}
+                className={
+                    'flex flex-grow table-auto h-full w-full overflow-y-auto'
+                }
+                // classNames={{
+                //     base: 'max-h-[520px] overflow-y-auto',
+                //     table: 'min-h-[420px]',
+                // }}
             >
                 <TableHeader>
                     <TableColumn key="createdAt">Created At</TableColumn>
