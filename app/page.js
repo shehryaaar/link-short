@@ -3,22 +3,22 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
 import { createData, getData } from '@/utilities/axios.js';
-import Spinner from '@/components/spinner/Spinner';
+// import Spinner from '@/components/spinner/Spinner';
 import { RiEmotionHappyFill } from 'react-icons/ri';
 import { FaGithub, FaLink } from 'react-icons/fa';
-import configuration from '@/configuration/configuration';
+import {
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    getKeyValue,
+    Spinner,
+    Button,
+    Input,
+} from '@nextui-org/react';
 
 export default function Home() {
     const [urls, setUrls] = useState([]);
@@ -81,8 +81,8 @@ export default function Home() {
     return loading ? (
         <Spinner />
     ) : (
-        <div className="flex flex-col gap-12 mx-28 my-16">
-            <div className="flex items-center justify-between">
+        <div className="w-full h-[100vh] flex flex-col gap-6 pt-10 max-w-7xl mx-auto overflow-hidden">
+            <div className="flex items-center justify-between px-4 md:px-2">
                 <div className="flex items-center gap-2">
                     <FaLink />
                     <span className="text-lg">URL SHORTENER</span>
@@ -99,13 +99,13 @@ export default function Home() {
                 </a>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-4 md:px-2">
                 <form
                     onSubmit={handleUrlShortClick}
                     className="flex items-center gap-4"
                 >
                     <Input
-                        className="w-[650px]"
+                        className="w-[570px]"
                         value={urlInput}
                         onChange={(e) => setUrlInput(e.target.value)}
                         placeholder="Enter URL here"
@@ -121,30 +121,37 @@ export default function Home() {
                 </div>
             </div>
 
-            <Table>
-                <TableCaption>A list of recent URLs</TableCaption>
-
-                <TableHeader className="sticky top-0">
-                    <TableRow>
-                        <TableHead className="w-[250px]">Created At</TableHead>
-                        <TableHead>Short URL</TableHead>
-                        <TableHead>Original URL</TableHead>
-                    </TableRow>
+            <Table
+                isStriped
+                isHeaderSticky
+                aria-label="Example table with client side sorting"
+                className={
+                    'flex flex-grow table-auto h-full w-full overflow-y-auto'
+                }
+                // classNames={{
+                //     base: 'max-h-[520px] overflow-y-auto',
+                //     table: 'min-h-[420px]',
+                // }}
+            >
+                <TableHeader>
+                    <TableColumn key="createdAt">Created At</TableColumn>
+                    <TableColumn key="id">Short URL</TableColumn>
+                    <TableColumn key="url">Original URL</TableColumn>
                 </TableHeader>
-
-                <TableBody>
-                    {urls &&
-                        urls.map((url, index) => (
-                            <TableRow key={url?._id}>
-                                <TableCell className="font-medium">
-                                    {url.createdAt}
-                                </TableCell>
+                <TableBody
+                    isLoading={loading}
+                    items={urls}
+                    loadingContent={<Spinner label="Loading..." />}
+                >
+                    {(item) => (
+                        <TableRow key={item._id}>
+                            {(columnKey) => (
                                 <TableCell>
-                                    {currentDeploymentUrl}/{url?.id}
+                                    {getKeyValue(item, columnKey)}
                                 </TableCell>
-                                <TableCell>{url?.url}</TableCell>
-                            </TableRow>
-                        ))}
+                            )}
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>
