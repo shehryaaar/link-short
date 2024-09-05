@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { createData, getData } from '@/utilities/axios.js';
-// import Spinner from '@/components/spinner/Spinner';
+import Spinner from '@/components/spinner/Spinner';
 import { RiEmotionHappyFill } from 'react-icons/ri';
 import { FaGithub, FaLink } from 'react-icons/fa';
 import {
@@ -14,8 +14,6 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    getKeyValue,
-    Spinner,
     Button,
     Input,
 } from '@nextui-org/react';
@@ -128,30 +126,29 @@ export default function Home() {
                 className={
                     'flex flex-grow table-auto h-full w-full overflow-y-auto'
                 }
-                // classNames={{
-                //     base: 'max-h-[520px] overflow-y-auto',
-                //     table: 'min-h-[420px]',
-                // }}
             >
                 <TableHeader>
-                    <TableColumn key="createdAt">Created At</TableColumn>
-                    <TableColumn key="id">Short URL</TableColumn>
-                    <TableColumn key="url">Original URL</TableColumn>
+                    <TableColumn>Created At</TableColumn>
+                    <TableColumn>Short URL</TableColumn>
+                    <TableColumn>Original URL</TableColumn>
                 </TableHeader>
-                <TableBody
-                    isLoading={loading}
-                    items={urls}
-                    loadingContent={<Spinner label="Loading..." />}
-                >
-                    {(item) => (
-                        <TableRow key={item._id}>
-                            {(columnKey) => (
+                <TableBody>
+                    {urls &&
+                        urls?.map((url) => (
+                            <TableRow key={url?._id}>
+                                <TableCell>{url?.createdAt}</TableCell>
                                 <TableCell>
-                                    {getKeyValue(item, columnKey)}
+                                    <a
+                                        href={`${currentDeploymentUrl}/${url?.id}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {currentDeploymentUrl}/{url?.id}
+                                    </a>
                                 </TableCell>
-                            )}
-                        </TableRow>
-                    )}
+                                <TableCell>{url?.url}</TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
         </div>
