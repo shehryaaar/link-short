@@ -26,11 +26,9 @@ export default function Home() {
 
     const fetchApiData = async () => {
         try {
-            setLoading(true);
-
             const data = await getData('/api/v1');
 
-            setUrls(data.data);
+            setUrls(data?.data);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -38,12 +36,12 @@ export default function Home() {
     };
 
     useEffect(() => {
-        fetchApiData();
-    }, []);
-
-    useEffect(() => {
         const url = `${window.location.protocol}//${window.location.host}`;
         setCurrentDeploymentUrl(url);
+
+        setLoading(true);
+
+        fetchApiData();
     }, []);
 
     const handleUrlShortClick = async (event) => {
@@ -54,23 +52,27 @@ export default function Home() {
             return;
         }
 
-        const createDefaultPromise = createData(`/api/v1`, { url: urlInput });
+        const getShortUrlPromise = createData(`/api/v1`, { url: urlInput });
 
-        toast.promise(createDefaultPromise, {
+        toast.promise(getShortUrlPromise, {
             loading: 'Shortening...',
             success: (result) => {
-                if (result.success) {
-                    fetchApiData();
-                    return result.message;
+                // Check if the delete operation was successful
+                if (result?.success) {
+                    return result?.message;
                 } else {
-                    throw new Error(result.message);
+                    throw new Error(result?.message);
                 }
             },
-            error: 'An error occurred while shortening the URL.',
+            error: 'An error occurred while shortening the item.',
         });
 
         try {
-            await createDefaultPromise;
+            const result = await getShortUrlPromise;
+            if (result?.success) {
+                setUrlInput('');
+                await fetchApiData();
+            }
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -108,7 +110,7 @@ export default function Home() {
                         onChange={(e) => setUrlInput(e.target.value)}
                         placeholder="Enter URL here"
                     />
-                    <Button type="submit" variant="outline">
+                    <Button type="submit" color="default">
                         Shorten URL
                     </Button>
                 </form>
@@ -136,7 +138,13 @@ export default function Home() {
                     {urls &&
                         urls?.map((url) => (
                             <TableRow key={url?._id}>
-                                <TableCell>{url?.createdAt}</TableCell>
+                                <TableCell>
+                                    {url?.createdAt
+                                        ? new Date(
+                                              url?.createdAt
+                                          ).toLocaleDateString()
+                                        : 'N/A'}
+                                </TableCell>
                                 <TableCell>
                                     <a
                                         href={`${currentDeploymentUrl}/${url?.id}`}
