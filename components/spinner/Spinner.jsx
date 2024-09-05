@@ -14,7 +14,7 @@ export default function Spinner({ animation = animationData }) {
     };
 
     return (
-        <div className="h-full w-full grid place-content-center">
+        <div className="h-screen grid place-content-center">
             <Lottie options={defaultOptions} height={140} width={140} />
         </div>
     );
