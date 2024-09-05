@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import validator from 'validator';
 
 import UrlsModel from '@/app/api/v1/urls/urls.model.js';
 import databaseService from '@/service/databaseService.js';
@@ -30,6 +31,16 @@ export const POST = async (request) => {
 
         const urlData = await request.json(); // Get the original URL from the request
         console.debug(`Received URL data: ${urlData}`);
+
+        // Validate URL using validator library
+        if (!validator.isURL(urlData.url)) {
+            return await sendResponse(
+                request,
+                false,
+                httpStatus.BAD_REQUEST,
+                'Invalid URL format.'
+            );
+        }
 
         // Create a new URL entry in the database
         const newUrl = await UrlsModel.create({
