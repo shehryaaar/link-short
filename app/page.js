@@ -99,18 +99,19 @@ export default function Home() {
                 </a>
             </div>
 
-            <div className="flex items-center justify-between px-4 md:px-2">
+            <div className="flex items-center justify-between gap-4 px-4 md:px-2">
                 <form
                     onSubmit={handleUrlShortClick}
                     className="flex items-center gap-4"
                 >
                     <Input
-                        className="w-[570px]"
+                        size="sm"
+                        className="w-full md:w-[570px]"
                         value={urlInput}
                         onChange={(e) => setUrlInput(e.target.value)}
                         placeholder="Enter URL here"
                     />
-                    <Button type="submit" color="default">
+                    <Button size="sm" type="submit" color="default">
                         Shorten URL
                     </Button>
                 </form>
